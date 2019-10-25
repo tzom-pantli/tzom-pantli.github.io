@@ -21,6 +21,12 @@ function preload() {
 
 }
 
+let config = {
+
+    noche: false,
+    dia: true,
+    amanece: false,
+}
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -44,7 +50,24 @@ function draw() {
     }
 
 
-    noiseField();
+
+    if (config.dia) {
+        push();
+        noiseField();
+        pop();
+    }
+
+    if (config.noche) {
+        push();
+        noiseField_noche();
+        pop();
+    }
+
+    if (config.amanece) {
+        push();
+        noiseField_amanece();
+        pop();
+    }
 
 
 
@@ -152,16 +175,16 @@ function noiseField() {
     // noise field _
     push();
 
-    var xnoise = 200;
-    var ynoise = 200;
+    var xnoise = 0.0;
+    var ynoise = 0.0;
 
     for (var y = 0; y < height; y += density) {
         for (var x = 0; x < width; x += density) {
-            var n = noise(xnoise, ynoise, znoise) * 255;
+            var n = noise(xnoise, ynoise, znoise) * 170;
             noStroke();
             //fill(contador, n, contador);
             //fill(50, n, 200);
-            fill(n-100, n-100, n-100);
+            fill(200, n, 0);
             //fill(255, 178, n);
 
             rect(x, y, density, density);
@@ -172,6 +195,86 @@ function noiseField() {
     }
     znoise += ruido_inc;
 }
+
+function noiseField_noche() {
+    // noise field _
+    push();
+
+    var xnoise = 0.0;
+    var ynoise = 0.0;
+
+    for (var y = 0; y < height; y += density) {
+        for (var x = 0; x < width; x += density) {
+            var n = noise(xnoise, ynoise, znoise) * 255;
+            noStroke();
+            //fill(contador, n, contador);
+            fill(50, n, 200);
+            //fill(contador, 158, n);
+            //fill(255, 178, n);
+
+            rect(x, y, density, density);
+            xnoise += ruido_inc;
+        }
+        xnoise += ruido_inc;
+        ynoise += ruido_inc;
+    }
+    znoise += ruido_inc;
+}
+
+function noiseField_amanece() {
+    // noise field _
+    push();
+
+    var xnoise = 0.0;
+    var ynoise = 0.0;
+
+    for (var y = 0; y < height; y += density) {
+        for (var x = 0; x < width; x += density) {
+            var n = noise(xnoise, ynoise, znoise) * 255;
+            noStroke();
+            //fill(contador, n, contador);
+            //fill(50, n, 200);
+            fill(contador, 158, n);
+            //fill(255, 178, n);
+
+            rect(x, y, density, density);
+            xnoise += ruido_inc;
+        }
+        xnoise += ruido_inc;
+        ynoise += ruido_inc;
+    }
+    znoise += ruido_inc;
+}
+
+
+
+function keyPressed() {
+
+
+    //
+
+    if ((key == '1') || (key == '1')) {
+        config.dia = !config.dia;
+    }
+
+    if ((key == '2') || (key == '2')) {
+        config.noche = !config.noche;
+    }
+
+    if ((key == '3') || (key == '3')) {
+        config.amanece = !config.amanece;
+    }
+
+    // 
+
+    if (key == '9' || key == '9') {
+        window.location.reload();
+    }
+
+}
+
+
+
 
 
 function windowResized() {
